@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "72b14a22-fb5e-48ee-904d-f3694bcba5e4",
+		"name": "Sogeti Task_API Test1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://api.zippopotam.us/de/bw/stuttgart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							" pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json(); \r",
+							"pm.test(\"Verify country\", function () { \r",
+							"        pm.expect(jsonData.country).is.to.equal(\"Germany\"); \r",
+							"    });\r",
+							" \r",
+							"pm.test(\"Verify state\", function () { \r",
+							"        pm.expect(jsonData.state).is.to.equal(\"Baden-Württemberg\"); \r",
+							"    });\r",
+							" console.log(jsonData.places);\r",
+							"\r",
+							"pm.test(\"Test array properties\", () => {\r",
+							" const plz = jsonData.places.find\r",
+							"      (m => m.longitude === \"9.1767\");  \r",
+							"\t\r",
+							"    //detail array should include \"48.7786\"\r",
+							"  pm.expect(plz.latitude).is.to.equal(\"48.7786\");\r",
+							"    \t\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.zippopotam.us/de/bw/stuttgart",
+					"protocol": "http",
+					"host": [
+						"api",
+						"zippopotam",
+						"us"
+					],
+					"path": [
+						"de",
+						"bw",
+						"stuttgart"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "Germany",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "Baden-Württemberg",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

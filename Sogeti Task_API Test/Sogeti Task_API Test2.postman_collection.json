@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "dec9e7cd-771e-460a-85da-41771d2b8597",
+		"name": "Sogeti Task_API Test2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://api.zippopotam.us/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							" pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var jsonData = pm.response.json(); \r",
+							"var cv = pm.variables.get (\"countryvalue\");\r",
+							"var sv = pm.variables.get (\"statevalue\");\r",
+							"\r",
+							"pm.test(\"Verify country\", function () { \r",
+							"        pm.expect(jsonData.country).is.to.equal(cv);        \r",
+							"\r",
+							"    });\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify state\", function () {\r",
+							"for (let place of jsonData.places){\r",
+							"    if (place.state==sv);\r",
+							"     pm.expect(place.state).is.to.equal(sv);\r",
+							"    console.log(place)};\r",
+							"\r",
+							"});\r",
+							" \r",
+							"\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"countryvalue\": \"{{countryvalue}}\",\r\n    \"statevalue\": \"{{statevalue}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api.zippopotam.us/:country/:postcode",
+					"protocol": "http",
+					"host": [
+						"api",
+						"zippopotam",
+						"us"
+					],
+					"path": [
+						":country",
+						":postcode"
+					],
+					"variable": [
+						{
+							"key": "country",
+							"value": "{{country}}"
+						},
+						{
+							"key": "postcode",
+							"value": "{{postcode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
